@@ -1,0 +1,26 @@
+User Name:nima
+Password:1379
+CREATED AT:2020/03/18 22:39:06
+ 
+MENU::collections AT:2020/03/18 22:39:13
+SHOW::current hero AT:2020/03/18 22:39:32
+ERROR::selected hero rogue is locked AT:2020/03/18 22:39:37
+ERROR::dreadscale is in an illegal class AT:2020/03/18 22:39:54
+ERROR::friendly smith is in an illegal class AT:2020/03/18 22:40:05
+ERROR:rr does not exist in available cards AT:2020/03/18 22:40:09
+MENU:store AT:2020/03/18 22:40:20
+EXIT-GAME:2020/03/18 22:40:34
+
+Login At:2020/03/18 22:55:09
+SHOW::info of card polymorph AT:2020/03/18 22:55:19
+MENU::collections AT:2020/03/18 22:55:31
+ERROR::not in main menu when showing info AT:2020/03/18 22:55:38
+MENU::main AT:2020/03/18 22:56:14
+SHOW::info of card dreadscale AT:2020/03/18 22:56:23
+SHOW::info of card iron fist AT:2020/03/18 22:56:30
+ERROR::card t doesn't exist for showing info AT:2020/03/18 22:56:34
+EXIT-GAME:2020/03/18 22:56:40
+
+Login At:2020/03/18 22:57:22
+HELP : AT:2020/03/18 22:57:30
+EXIT-GAME:2020/03/18 22:57:50
