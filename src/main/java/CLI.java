@@ -1,4 +1,5 @@
 import cards.Card;
+import cards.Minion;
 import heros.*;
 import org.json.simple.parser.ParseException;
 
@@ -16,8 +17,11 @@ public class CLI {
             "\t exit-a: exit the game \n " +
             "\t delete-player: delete current profile \n" +
             "-Menu commands: \n" +
+            "\t main: move to Main menu \n" +
             "\t collections: move to profile collections \n" +
             "\t store: move to Game Store \n" +
+            "-Main commands: \n" +
+            "\t info [card name]: Show general information of a card \n" +
             "-Collections commands: \n" +
             "\t ls-a-hero: show all heros \n" +
             "\t ls-m-hero: show current hero \n" +
@@ -61,6 +65,37 @@ public class CLI {
             System.out.println(help);
 
         }
+        // main menu:
+        else if (s.equals("main")) {
+            logger.writeLog("MENU:", "main");
+            currentMenu = "main";
+            System.out.println("-main menu");
+        } else if (s.startsWith("info ")) {
+            if (currentMenu.equals("main")) {
+                Card tempCard = Card.getCardObject(s.substring(5));
+                if (tempCard != null) {
+                    logger.writeLog("SHOW:", "info of card " + s.substring(5));
+                    System.out.println("\t" + tempCard.getName() + ":");
+                    System.out.println("\t -Class:" + tempCard.getCardClass());
+                    System.out.println("\t -Type:" + tempCard.getCardType());
+                    System.out.println("\t -Rarity:" + tempCard.getRarity().toString());
+                    System.out.println("\t -Mana Cost:" + tempCard.getManaCost());
+                    if (tempCard.getCardType().equals("minion")) {
+                        System.out.println("\t -Attack:" + ((Minion) tempCard).getAttack());
+                        System.out.println("\t -HP:" + ((Minion) tempCard).getHp());
+                    }
+                    System.out.println("\t -description:" + tempCard.getDescription());
+                    System.out.println("\t -Gems Cost:" + tempCard.getGemsCost());
+
+                } else {
+                    logger.writeLog("ERROR:", "card " + s.substring(5) + " doesn't exist for showing info");
+                    System.out.println("-Card doesn't exist");
+                }
+            } else {
+                logger.writeLog("ERROR:", "not in main menu when showing info");
+                System.out.println("-You are not in main menu.current menu is:" + currentMenu);
+            }
+        }
         // collections menu:
         else if (s.equals("collections")) { // collections menu
             logger.writeLog("MENU:", "collections");
@@ -93,12 +128,12 @@ public class CLI {
         } else if (s.startsWith("select ")) {
             if (currentMenu.equals("collections")) {
                 if (Hero.getHero(s.substring(7)) != null) {
-                    if(s.substring(7).equals("mage")) {
+                    if (s.substring(7).equals("mage")) {
                         currentPlayer.setHero(s.substring(7));
                         logger.writeLog("SELECT", "selected hero " + s.substring(7));
                         System.out.println("-Hero selected successfully");
-                    }else{
-                        logger.writeLog("ERROR:", "selected hero " + s.substring(7)+" is locked");
+                    } else {
+                        logger.writeLog("ERROR:", "selected hero " + s.substring(7) + " is locked");
                         System.out.println("-Selected hero is locked");
                     }
                 } else {
@@ -124,8 +159,8 @@ public class CLI {
 
         } else if (s.equals("ls-m-cards")) { //
             if (currentMenu.equals("collections")) {
-                logger.writeLog("SHOW LIST", "deck cards of hero "+currentPlayer.getHero().toString());
-                System.out.println("-Current hero:"+currentPlayer.getHero().toString()+":");
+                logger.writeLog("SHOW LIST", "deck cards of hero " + currentPlayer.getHero().toString());
+                System.out.println("-Current hero:" + currentPlayer.getHero().toString() + ":");
                 printDeckCards();
             } else {
                 logger.writeLog("ERROR:", "not in collections menu when showing current deck");
@@ -143,9 +178,7 @@ public class CLI {
             }
 
 
-        }
-
-        else if (s.startsWith("add ")) {
+        } else if (s.startsWith("add ")) {
             if (currentMenu.equals("collections")) {
                 switch (currentPlayer.addDeckCard(s.substring(4))) {
                     case 1: {
@@ -248,13 +281,7 @@ public class CLI {
                 logger.writeLog("ERROR:", "not in store menu when selling a card");
                 System.out.println("-You are not in store menu.current menu is:" + currentMenu);
             }
-        } else if (s.equals("test")) {
-            System.out.println(currentPlayer.getDeckCards().toString());
-            currentPlayer.setHero("rogue");
-            System.out.println(currentPlayer.getDeckCards().toString());
-            currentPlayer.setHero("warlock");
-            System.out.println(currentPlayer.getDeckCards().toString());
-            currentPlayer.setHero("mage");
+
         } else {
             logger.writeLog("ERROR:", "command not recognized");
             System.out.println("-command not recognized");
