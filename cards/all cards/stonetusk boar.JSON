@@ -1,0 +1,11 @@
+{
+  "gemsCost": 2,
+  "attack": 1,
+  "name": "stonetusk boar",
+  "cardType": "minion",
+  "hp": 1,
+  "description": "charge",
+  "manaCost": 1,
+  "cardClass": "neutral",
+  "rarity": "rare"
+}

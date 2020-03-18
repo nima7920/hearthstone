@@ -1,0 +1,9 @@
+{
+  "gemsCost": 3,
+  "name": "sinister strike",
+  "cardType": "spel",
+  "description": "deal 3 damage to enemy hero",
+  "manaCost": 1,
+  "cardClass": "rogue",
+  "rarity": "common"
+}

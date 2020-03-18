@@ -1,0 +1,11 @@
+{
+  "gemsCost": 17,
+  "attack": 4,
+  "name": "the black knight",
+  "cardType": "minion",
+  "hp": 5,
+  "description": "battlecry:destroy an enemy minion with taunt",
+  "manaCost": 6,
+  "cardClass": "neutral",
+  "rarity": "legendary"
+}

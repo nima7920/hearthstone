@@ -1,0 +1,11 @@
+{
+  "gemsCost": 5,
+  "attack": 2,
+  "name": "proud defender",
+  "cardType": "minion",
+  "hp": 6,
+  "description": "taunt has +2 attack while you have no other minions",
+  "manaCost": 4,
+  "cardClass": "neutral",
+  "rarity": "common"
+}

@@ -1,0 +1,11 @@
+{
+  "gemsCost": 7,
+  "attack": 2,
+  "name": "phantom militia",
+  "cardType": "minion",
+  "hp": 4,
+  "description": "echo taunt",
+  "manaCost": 3,
+  "cardClass": "neutral",
+  "rarity": "rare"
+}

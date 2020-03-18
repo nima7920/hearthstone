@@ -1,0 +1,11 @@
+{
+  "gemsCost": 8,
+  "attack": 4,
+  "name": "rotten applebaum",
+  "cardType": "minion",
+  "hp": 5,
+  "description": "taunt deathrattle:restore 4 health to your hero",
+  "manaCost": 5,
+  "cardClass": "neutral",
+  "rarity": "rare"
+}

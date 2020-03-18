@@ -1,0 +1,11 @@
+{
+  "gemsCost": 4,
+  "attack": 1,
+  "name": "silverback patriarch",
+  "cardType": "minion",
+  "hp": 4,
+  "description": "taunt",
+  "manaCost": 3,
+  "cardClass": "neutral",
+  "rarity": "common"
+}

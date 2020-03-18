@@ -1,0 +1,9 @@
+{
+  "gemsCost": 5,
+  "name": "drain life",
+  "cardType": "spel",
+  "description": "deal 2 damage,restore 2 health to your hero",
+  "manaCost": 3,
+  "cardClass": "warlock",
+  "rarity": "common"
+}

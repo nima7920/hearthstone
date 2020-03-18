@@ -1,0 +1,11 @@
+{
+  "gemsCost": 3,
+  "attack": 2,
+  "name": "arcane servant",
+  "cardType": "minion",
+  "hp": 3,
+  "description": "",
+  "manaCost": 2,
+  "cardClass": "neutral",
+  "rarity": "common"
+}

@@ -1,0 +1,9 @@
+{
+  "gemsCost": 3,
+  "name": "arcane missiles",
+  "cardType": "spel",
+  "description": "deal 3 damage randomly split among all enemies",
+  "manaCost": 1,
+  "cardClass": "neutral",
+  "rarity": "common"
+}

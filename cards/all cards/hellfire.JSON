@@ -1,0 +1,9 @@
+{
+  "gemsCost": 3,
+  "name": "hellfire",
+  "cardType": "spel",
+  "description": "deal 3 damage to ALL characters",
+  "manaCost": 4,
+  "cardClass": "neutral",
+  "rarity": "common"
+}
