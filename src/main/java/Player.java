@@ -5,6 +5,7 @@ import org.json.simple.parser.JSONParser;
 import java.io.*;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import heros.*;
 import cards.*;
@@ -13,11 +14,13 @@ public class Player {
     // defining basic fields:
     // main fields:
     private String name, password;
-    private int gems = 50;
+    private long gems = 50;
     private Hero hero;
+    private long id;
     private ArrayList<String> availableCards;
     private ArrayList<String> deckCards;
-
+    // defining heros:
+    private Hero mage = new Mage(), rogue = new Rogue(), warlock = new Warlock();
     // auxiliary fields:
     private JSONArray availableCardsJSON;
     private JSONArray deckCardsJSON;
@@ -33,8 +36,8 @@ public class Player {
         availableCardsJSON = new JSONArray();
         deckCardsJSON = new JSONArray();
         profileFields = new JSONObject();
-        hero = new Mage();  // default hero
-
+        hero = mage;  // default hero
+        deckCards = mage.getDeckCards();
     }
 
     // defining getters and setters:
@@ -57,11 +60,11 @@ public class Player {
     }
 
     // Gems:
-    public void setGems(int g) {
+    public void setGems(long g) {
         this.gems = g;
     }
 
-    public int getGems() {
+    public long getGems() {
         return this.gems;
     }
 
@@ -70,10 +73,30 @@ public class Player {
         return hero;
     }
 
-    public void setHero(Hero hero) {
-        this.hero = hero;
+    public void setHero(String heroName) throws IOException, org.json.simple.parser.ParseException {
+        if(heroName.equals("mage"))
+            this.hero=mage;
+        if(heroName.equals("rogue"))
+            this.hero=rogue;
+        if(heroName.equals("warlock"))
+            this.hero=warlock;
+        updateDeck();
     }
 
+    // id
+    public long getId() {
+        return id;
+    }
+
+    // available cards:
+    public ArrayList<String> getAvailableCards() {
+        return availableCards;
+    }
+
+    // deck cards:
+    public ArrayList<String> getDeckCards() {
+        return deckCards;
+    }
 
     public void createProfile(String Name, String Password) throws IOException {
         // setting fields in class:
@@ -81,18 +104,24 @@ public class Player {
         profileReader = new FileReader("profiles//" + Name + ".JSON");
         setName(Name);
         setPassword(Password);
-
+        this.id = System.currentTimeMillis();
+        availableCards=new ArrayList<>(Arrays.asList("polymorph","dreadscale","friendly smith","arcane explosion","arcane servant","fireball","murloc raider","river crocolisk",
+                "stonetusk boar","silverback patriarch","hellfire","the black knight"));
 // adding fields to JSON Object
-        profileFields.put("username", getName());
+        profileFields.put("name", getName());
         profileFields.put("password", getPassword());
         profileFields.put("gems", getGems());
         profileFields.put("hero", hero.toString());
         profileFields.put("availableCards", availableCards);
-        profileFields.put("deckCards", deckCards);
-
+        profileFields.put("mage",mage.getDeckCards());
+        profileFields.put("rogue",rogue.getDeckCards());
+        profileFields.put("warlock",warlock.getDeckCards());
+        profileFields.put("id", id);
 // adding fields to profile
         profileWriter.write(profileFields.toJSONString());
         profileWriter.flush();
+        profileWriter.close();
+        profileReader.close();
     }
 
     // isProfileExist checks whether a profile with a given name exists:
@@ -105,7 +134,8 @@ public class Player {
     public int loginProfile(String Name, String Password) throws IOException, ParseException, org.json.simple.parser.ParseException {
         if (isProfileExist(Name)) {
             profileReader = new FileReader("profiles//" + Name + ".JSON");
-            profileWriter = new FileWriter("profiles//" + Name + ".JSON");
+
+//            profileWriter = new FileWriter("profiles//" + Name + ".JSON");
             // temporary objects for reading the file:
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(profileReader);
@@ -115,18 +145,32 @@ public class Player {
                 // setting profile fields:
                 setName((String) profileFields.get("name"));
                 setPassword((String) profileFields.get("password"));
-                setGems((int) profileFields.get("gems"));
-                setHero(Hero.getHero((String) profileFields.get("hero")));
+                setGems((long) profileFields.get("gems"));
+                this.id = (long) profileFields.get("id");
+                if(profileFields.get("hero").equals("mage"))
+                    this.hero=mage;
+                if(profileFields.get("hero").equals("rogue"))
+                    this.hero=rogue;
+                if(profileFields.get("hero").equals("warlock"))
+                    this.hero=warlock;
                 availableCards = (ArrayList) profileFields.get("availableCards");
-                deckCards = (ArrayList) profileFields.get("deckCards");
-
+                mage.setDeckCards( (ArrayList) profileFields.get("mage"));
+                rogue.setDeckCards((ArrayList) profileFields.get("rogue"));
+                warlock.setDeckCards((ArrayList) profileFields.get("warlock"));
+                updateDeck();
+                profileReader.close();
                 return 1; // logged in successfully
             } else {
+                profileReader.close();
                 return -1; // password is wrong
             }
         } else {
             return 0; // no such profile exists
         }
+    }
+
+    public void deleteProfile() throws IOException {
+        profileFile.delete();
     }
 
     // updates the data written in profile:
@@ -136,13 +180,18 @@ public class Player {
         profileFields.put("username", getName());
         profileFields.put("password", getPassword());
         profileFields.put("gems", getGems());
+        profileFields.put("id", id);
         profileFields.put("hero", hero.toString());
         profileFields.put("availableCards", availableCards);
-        profileFields.put("deckCards", deckCards);
+        profileFields.put("mage",mage.getDeckCards());
+        profileFields.put("rogue",rogue.getDeckCards());
+        profileFields.put("warlock",warlock.getDeckCards());
 
+        profileWriter = new FileWriter("profiles//" + getName() + ".JSON");
         // writing JSON Object in file:
         profileWriter.write(profileFields.toJSONString());
         profileWriter.flush();
+        profileWriter.close();
     }
 
     // method to add and remove card to Card Arrays:
@@ -152,14 +201,26 @@ public class Player {
     }
 
     // method is defined int to determine the final action:
-    // returns 0 if deck is full,-1 if there are two same cards in the deck,and 1 if addition is successful
-    public int addDeckCard(String cardName) {
+    // returns 0 if deck is full,-1 if there are two same cards in the deck,-2 if card is not in hero class,
+    // -3 if card is not available,and 1 if addition is successful
+
+    public int addDeckCard(String cardName) throws IOException, org.json.simple.parser.ParseException {
         if (deckCards.size() >= 30) // deck is full
             return 0;
         if (deckCards.indexOf(cardName) < deckCards.lastIndexOf(cardName)) // there two cards with same name as cardName
             return -1;
+        if (availableCards.contains(cardName) != true)
+            return -3;
+        Card tempCard = Card.getCardObject(cardName); // not null,because we know that cardName is in available cards
+        if (!tempCard.getCardClass().equals("neutral") && !tempCard.getCardClass().equals(getHero().toString())) // card is in illegal class
+            return -2;
+
         deckCards.add(cardName);
         return 1;
+    }
+
+    public void updateDeck() throws IOException, org.json.simple.parser.ParseException {
+      deckCards=hero.getDeckCards();
     }
 
     public void removeAvailableCard(String cardName) {
@@ -167,6 +228,7 @@ public class Player {
     }
 
     public void removeDeckCard(String cardName) {
+        deckCards.remove(cardName);
         deckCards.remove(cardName);
     }
 

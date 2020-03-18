@@ -1,22 +1,22 @@
 package cards;
 
 public class Minion extends Card {
-private int hp;
-private int attack;
+private long hp;
+private long attack;
 
-    public int getHp() {
+    public long getHp() {
         return hp;
     }
 
-    public void setHp(int hp) {
+    public void setHp(long hp) {
         this.hp = hp;
     }
 
-    public int getAttack() {
+    public long getAttack() {
         return attack;
     }
 
-    public void setAttack(int attack) {
+    public void setAttack(long attack) {
         this.attack = attack;
     }
 }
