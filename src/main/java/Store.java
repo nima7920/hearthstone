@@ -1,5 +1,6 @@
 import cards.Card;
 import cards.Minion;
+import heros.Hero;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -60,14 +61,32 @@ public class Store {
         }
     }
 
-    public void sellCard(String cardName) throws IOException, ParseException {
+    // returns 0 if player doesn't have the card,-1 if card is in one of the decks and 1 if card is sold
+    public int sellCard(String cardName) throws IOException, ParseException {
         if (currentPlayer.getAvailableCards().contains(cardName)) {
-            Card tempCard = Card.getCardObject(cardName);
-            currentPlayer.setGems(currentPlayer.getGems() + (long) tempCard.getGemsCost());
-            currentPlayer.removeDeckCard(cardName);
-            currentPlayer.removeAvailableCard(cardName);
-            System.out.println("Card is sold");
-            updateShowcaseCards();
+            boolean inMage=false,inRogue=false,inWarlock=false;
+            Hero initHero=currentPlayer.getHero();
+            currentPlayer.setHero("mage");
+            inMage=currentPlayer.getDeckCards().contains(cardName);
+            currentPlayer.setHero("rogue");
+            inRogue=currentPlayer.getDeckCards().contains(cardName);
+            currentPlayer.setHero("warlock");
+            inWarlock=currentPlayer.getDeckCards().contains(cardName);
+            currentPlayer.setHero(initHero.toString());
+            if(inMage || inRogue || inWarlock){
+                return -1;
+//                System.out.println("-Card is in one of your decks");
+            }else {
+                Card tempCard = Card.getCardObject(cardName);
+                currentPlayer.setGems(currentPlayer.getGems() + (long) tempCard.getGemsCost());
+//                currentPlayer.removeDeckCard(cardName);
+                currentPlayer.removeAvailableCard(cardName);
+//                System.out.println("Card is sold");
+                updateShowcaseCards();
+                return 1;
+            }
+        }else{
+            return 0;
         }
     }
 

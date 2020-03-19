@@ -275,8 +275,18 @@ public class CLI {
             }
         } else if (s.startsWith("sell ")) {
             if (currentMenu.equals("store")) {
-                logger.writeLog("SELL", "card " + s.substring(5));
-                store.sellCard(s.substring(5));
+//                logger.writeLog("SELL", "card " + s.substring(5));
+                int sellStat=store.sellCard(s.substring(5));
+                if(sellStat==1){ // card is sold
+                    logger.writeLog("SELL", "card " + s.substring(5));
+                    System.out.println("-Card is sold");
+                }else if(sellStat==0){
+                    logger.writeLog("ERROR:","card "+s.substring(5)+" is not available to be sold");
+                    System.out.println("-Card is not available");
+                }else{
+                    logger.writeLog("ERROR:","card "+s.substring(5) +" can't be sold because it belongs to one of player decks");
+                    System.out.println("-Selected card is in one of your decks and cannot be sold");
+                }
             } else {
                 logger.writeLog("ERROR:", "not in store menu when selling a card");
                 System.out.println("-You are not in store menu.current menu is:" + currentMenu);
@@ -298,7 +308,7 @@ public class CLI {
         for (int i = 0; i < crds.size(); i++) {
             if (crds.indexOf(crds.get(i)) == i) {
                 int j = (crds.lastIndexOf(crds.get(i)) == i) ? 1 : 2;
-                System.out.println("\t" + crds.get(i) + ":" + j);
+                System.out.println("\t" + crds.get(i) + ": " + j);
 
             }
         }

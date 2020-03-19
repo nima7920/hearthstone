@@ -24,3 +24,20 @@ EXIT-GAME:2020/03/18 22:56:40
 Login At:2020/03/18 22:57:22
 HELP : AT:2020/03/18 22:57:30
 EXIT-GAME:2020/03/18 22:57:50
+
+Login At:2020/03/19 14:18:23
+MENU:store AT:2020/03/19 14:18:29
+SELL:card iron fist AT:2020/03/19 14:18:36
+SELL:card iron fist AT:2020/03/19 14:18:48
+EXIT-GAME:2020/03/19 14:18:56
+
+Login At:2020/03/19 14:40:08
+MENU::collections AT:2020/03/19 14:40:12
+MENU:store AT:2020/03/19 14:40:25
+ERROR::card hellfire can't be sold because it belongs to one of player decks AT:2020/03/19 14:40:31
+ERROR::card ss is not available to be sold AT:2020/03/19 14:40:36
+ERROR::card polymorph can't be sold because it belongs to one of player decks AT:2020/03/19 14:40:45
+BUY:card drain life AT:2020/03/19 14:41:02
+SELL:card drain life AT:2020/03/19 14:41:09
+BUY:card ss AT:2020/03/19 14:41:20
+EXIT-GAME:2020/03/19 14:41:28
