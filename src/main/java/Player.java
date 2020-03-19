@@ -124,6 +124,10 @@ public class Player {
         profileReader.close();
     }
 
+    public ArrayList<String> getHeroDeck(String heroName){
+        return Hero.getHero(heroName).getDeckCards();
+    }
+
     // isProfileExist checks whether a profile with a given name exists:
     public boolean isProfileExist(String Name) {
         profileFile = new File("profiles//" + Name + ".JSON");

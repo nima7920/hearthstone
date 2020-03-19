@@ -41,3 +41,13 @@ BUY:card drain life AT:2020/03/19 14:41:02
 SELL:card drain life AT:2020/03/19 14:41:09
 BUY:card ss AT:2020/03/19 14:41:20
 EXIT-GAME:2020/03/19 14:41:28
+
+Login At:2020/03/19 16:12:27
+MENU:store AT:2020/03/19 16:12:31
+SHOW LIST:player's salable cards AT:2020/03/19 16:12:34
+SHOW LIST:store showcase AT:2020/03/19 16:12:39
+BUY:card iron fist AT:2020/03/19 16:13:03
+SHOW LIST:player's salable cards AT:2020/03/19 16:13:08
+SELL:card iron fist AT:2020/03/19 16:13:14
+SHOW LIST:player's salable cards AT:2020/03/19 16:13:19
+EXIT-GAME:2020/03/19 16:13:23

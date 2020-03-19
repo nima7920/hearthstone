@@ -1,6 +1,7 @@
 import cards.Card;
 import cards.Minion;
 import heros.*;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -254,11 +255,16 @@ public class CLI {
                 logger.writeLog("ERROR:", "not in store menu when showing all showcase cards");
                 System.out.println("-You are not in store menu.current menu is:" + currentMenu);
             }
-        } else if (s.equals("ls-s")) {
+        }
+        else if (s.equals("ls-s")) {
             if (currentMenu.equals("store")) {
                 logger.writeLog("SHOW LIST", "player's salable cards");
                 System.out.println("-Your cards that you can sell are:(after selling,you can buy that card again)");
+
                 for (String x : currentPlayer.getAvailableCards()) {
+                    if(!(currentPlayer.getHeroDeck("mage").contains(x) ||
+                            currentPlayer.getHeroDeck("rogue").contains(x) ||
+                            currentPlayer.getHeroDeck("warlock").contains(x)))
                     System.out.println(x);
                 }
             } else {
